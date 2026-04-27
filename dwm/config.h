@@ -63,7 +63,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char *sscmd[] = {
     "sh", "-c",
-    "maim -s -u | xclip -selection clipboard -t image/png -i",
+    "maim | xclip -selection clipboard -t image/png",
     NULL
 };
 
