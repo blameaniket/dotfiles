@@ -23,8 +23,9 @@ bindkey -v
 export KEYTIMEOUT=1
 
 
+WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
 bindkey -M viins '^W' backward-kill-word
-bindkey -M viins '^[[1;5C' forward-word
+bindkey -M viins '^[[1;5C' vi-forward-word-end
 bindkey -M viins '^[[1;5D' backward-word
 
 
@@ -61,4 +62,5 @@ alias vim="nvim"
 
 
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 
