@@ -1,22 +1,64 @@
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
 
-export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="powerlevel10k/powerlevel10k"
+setopt autocd extendedglob nomatch
+zstyle :compinstall filename '/home/aniketmondal/.zshrc'
 
-plugins=(git)
+autoload -Uz compinit
+compinit
 
-source $ZSH/oh-my-zsh.sh
+zstyle ':completion:*' menu select
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
 
-eval "$(zoxide init zsh --cmd cd)"
+setopt ALWAYS_TO_END
 
+
+_comp_options+=(globdots)
+
+
+bindkey -v
+export KEYTIMEOUT=1
+
+
+bindkey -M viins '^W' backward-kill-word
+bindkey -M viins '^[[1;5C' forward-word
+bindkey -M viins '^[[1;5D' backward-word
+
+
+# Fix backspace in vi insert mode
+bindkey -M viins '^?' backward-delete-char
+
+
+source /usr/share/fzf/completion.zsh
+source /usr/share/fzf/key-bindings.zsh
+
+
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
+
+
+
+
+autoload -Uz vcs_info
+precmd() { vcs_info }
+
+# zstyle ':vcs_info:git:*' formats ' git:(%b)'
+# PS1='> %~${vcs_info_msg_0_} '
+
+setopt prompt_subst
+# echo " ( .-.)"
+PS1='%~${vcs_info_msg_0_}> '
+zstyle ':vcs_info:git:*' formats ' (%b)'
+
+
+
+alias ls="ls -l -a -F"
 alias vim="nvim"
-alias ll="eza --group-directories-first -a -lh --icons=always"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
