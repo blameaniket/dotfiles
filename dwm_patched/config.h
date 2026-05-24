@@ -5,7 +5,7 @@ static const unsigned int borderpx  = 0;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=10" };
+static const char *fonts[]          = { "DejaVu Sans Mono:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -35,7 +35,7 @@ static const Rule rules[] = {
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 static const int refreshrate = 120;  /* refresh rate (per second) for client move/resize */
 
@@ -47,7 +47,7 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -71,29 +71,41 @@ static const char *sscmd[] = {
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-    { MODKEY,                       XK_Print,  spawn,          {.v = sscmd } },
+	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_Print,  spawn,          {.v = sscmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+	// { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
+	// { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+	{ MODKEY,                       XK_h,      focusdir,       {.i = 0 } }, // left
+    { MODKEY,                       XK_j,      focusdir,       {.i = 3 } }, // down
+	{ MODKEY,                       XK_l,      focusdir,       {.i = 1 } }, // right
+	{ MODKEY,                       XK_k,      focusdir,       {.i = 2 } }, // up
+    { MODKEY|ShiftMask,             XK_h,      moveresize,     {.v = "-25x 0y 0w 0h" } },
+    { MODKEY|ShiftMask,             XK_j,      moveresize,     {.v = "0x 25y 0w 0h" } },
+    { MODKEY|ShiftMask,             XK_k,      moveresize,     {.v = "0x -25y 0w 0h" } },
+    { MODKEY|ShiftMask,             XK_l,      moveresize,     {.v = "25x 0y 0w 0h" } },
+    { MODKEY,                       XK_Down,   moveresize,     {.v = "0x 0y 0w 25h" } },
+    { MODKEY,                       XK_Up,     moveresize,     {.v = "0x 0y 0w -25h" } },
+    { MODKEY,                       XK_Right,  moveresize,     {.v = "0x 0y 25w 0h" } },
+    { MODKEY,                       XK_Left,   moveresize,     {.v = "0x 0y -25w 0h" } },
+    { MODKEY|ControlMask,           XK_Up,     moveresizeedge, {.v = "t"} },
+    { MODKEY|ControlMask,           XK_Down,   moveresizeedge, {.v = "b"} },
+    { MODKEY|ControlMask,           XK_Left,   moveresizeedge, {.v = "l"} },
+    { MODKEY|ControlMask,           XK_Right,  moveresizeedge, {.v = "r"} },
+    { MODKEY|ControlMask|ShiftMask, XK_Up,     moveresizeedge, {.v = "T"} },
+    { MODKEY|ControlMask|ShiftMask, XK_Down,   moveresizeedge, {.v = "B"} },
+    { MODKEY|ControlMask|ShiftMask, XK_Left,   moveresizeedge, {.v = "L"} },
+    { MODKEY|ControlMask|ShiftMask, XK_Right,  moveresizeedge, {.v = "R"} },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+	{ MODKEY,                       XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_v,      togglefloating, {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)

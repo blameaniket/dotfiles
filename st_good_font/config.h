@@ -5,8 +5,20 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "monospace:pixelsize=18:antialias=true:autohint=true";
+static char *font = "DejaVu Sans Mono:pixelsize=18:antialias=true:autohint=true";
 static int borderpx = 2;
+
+/*
+ * 1: render most of the lines/blocks characters without using the font for
+ *    perfect alignment between cells (U2500 - U259F except dashes/diagonals).
+ *    Bold affects lines thickness if boxdraw_bold is not 0. Italic is ignored.
+ * 0: disable (render all U25XX glyphs normally from the font).
+ */
+const int boxdraw = 1;
+const int boxdraw_bold = 1;
+
+/* braille (U28XX):  1: render as adjacent "pixels",  0: use font */
+const int boxdraw_braille = 0;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -60,7 +72,7 @@ static double maxlatency = 33;
  * blinking timeout (set to 0 to disable blinking) for the terminal blinking
  * attribute.
  */
-static unsigned int blinktimeout = 800;
+static unsigned int blinktimeout = 0;
 
 /*
  * thickness of underline and bar cursors
@@ -93,9 +105,6 @@ char *termname = "st-256color";
  */
 unsigned int tabspaces = 8;
 
-/* bg opacity */
-float alpha = 0.9;
-
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 	/* 8 normal colors */
@@ -109,7 +118,7 @@ static const char *colorname[] = {
 	"#e0def4", /* default foreground colour */
 
 	/* 8 bright colors */
-	"#584875",
+	"#333333",
 	"#cf7e85",
 	"#80a66b",
 	"#b7915c",
@@ -121,7 +130,7 @@ static const char *colorname[] = {
 	[255] = 0,
 
 	/* more colors can be added after 255 to use with DefaultXX */
-	"#777777",
+	"#cccccc",
 	"#555555",
 	"#e0def4", /* default foreground colour */
 	"#111111", /* default background colour */
