@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-zathura $(find ~/Downloads/ | fzf)
+selection=`rg --files ~ -g '*.pdf*' | fzf`
+sioyek $selection
