@@ -1,1 +1,1 @@
-maim | xclip -selection clipboard -t image/png
+maim -s | xclip -selection clipboard -t image/png

@@ -10,7 +10,7 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
-for_window [class="^.*"] border pixel 2
+# for_window [class="^.*"] border pixel 2
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -34,8 +34,8 @@ exec --no-startup-id dex --autostart --environment i3
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
-exec feh --bg-fill Wallpapers/minimalwallpaper.png
-exec redshift -b 0.5 -O 3500K
+
+exec --no-startup-id redshift -b 0.5 -P -O 3000
 
 # feh --bg-fill ~/Wallpapers/Graphite/flowers.jpg
 
@@ -82,10 +82,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+bindsym $mod+Shift+h move left 40px
+bindsym $mod+Shift+j move down 40px
+bindsym $mod+Shift+k move up 40px
+bindsym $mod+Shift+l move right 40px
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -174,13 +174,13 @@ mode "resize" {
         bindsym h resize shrink width 20 px
         bindsym j resize grow height 20 px
         bindsym k resize shrink height 20 px
-        bindsym l resize grow width 20 px
+        bindsym l resize grow width 40 px
 
         # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Left resize shrink width 20 px or 20 ppt
+        bindsym Down resize grow height 20 px or 20 ppt
+        bindsym Up resize shrink height 20 px or 20 ppt
+        bindsym Right resize grow width 20 px or 20 ppt
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
@@ -190,11 +190,21 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+
+# class                 border    backgr.   text      indicator   child_border
+client.focused          #444444 #333333 #ffffff #2e9ef4   #333333
+client.focused_inactive #333333 #333333 #777777 #484e50   #333333
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+
+
 bindsym Print exec ~/dev/dotfiles/scripts/screenshot.sh
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-       status_command i3status
-}
+# bar {
+#        status_command i3status
+# }
 

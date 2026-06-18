@@ -1,0 +1,14 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "ollama/qwen3:8b",
+  "mcp": {
+    "exa": {
+      "type": "remote",
+      "url": "https://mcp.exa.ai/mcp",
+      "enabled": true,
+      "headers": {
+        "x-api-key": "125d77ad-39eb-490b-bfe1-73cd3283067b"
+      }
+    }
+  }
+}

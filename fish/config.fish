@@ -6,3 +6,5 @@ end
 set PATH $PATH /home/aniketmondal/.local/bin
 
 alias ls="ls --color=never --indicator-style=classify -lah"
+alias catfile="~/dev/dotfiles/scripts/catfile.sh"
+alias openpdf="~/dev/dotfiles/scripts/openpdf.sh"
