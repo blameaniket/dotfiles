@@ -1,7 +1,17 @@
 #!/usr/bin/env bash
 
-selected=`fd . ~/wallpaper | fzf`
+# cd ~/Downloads/wallpapers/ || exit
+selection=`rg --files ~/Downloads/wallpapers | fzf`
 
-feh --bg-fill $selected
+if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+    swaybg -i $selection -m fill &
 
-echo $selected
+elif [ "$XDG_SESSION_TYPE" = "x11" ]; then
+    feh --bg-fill $selection &
+
+else
+    echo "unknown session type"
+    exit 1
+fi
+
+echo $selection
