@@ -1,66 +1,69 @@
-# Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=50000
+SAVEHIST=50000
+
+setopt APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+
 
 setopt autocd extendedglob nomatch
-zstyle :compinstall filename '/home/aniketmondal/.zshrc'
-
-autoload -Uz compinit
-compinit
-
-zstyle ':completion:*' menu select
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
-
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
 setopt ALWAYS_TO_END
-
 
 _comp_options+=(globdots)
 
 
-bindkey -v
-export KEYTIMEOUT=1
+autoload -Uz compinit
+compinit -C
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$HOME/.cache/zsh/zcompcache"
 
 
-WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
-bindkey -M viins '^W' backward-kill-word
-bindkey -M viins '^[[1;5C' vi-forward-word-end
-bindkey -M viins '^[[1;5D' backward-word
+autoload -Uz up-line-or-beginning-search
+autoload -Uz down-line-or-beginning-search
 
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
 
-# Fix backspace in vi insert mode
-bindkey -M viins '^?' backward-delete-char
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
 
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
 
-source /usr/share/fzf/completion.zsh
-source /usr/share/fzf/key-bindings.zsh
-
-
-setopt AUTO_PUSHD
-setopt PUSHD_IGNORE_DUPS
-setopt PUSHD_SILENT
-
-
+bindkey '^[[5D' backward-word
+bindkey '^[[5C' forward-word
 
 
 autoload -Uz vcs_info
+
+zstyle ':vcs_info:git:*' formats ' (%b)'
+zstyle ':vcs_info:*' enable git
+
 precmd() { vcs_info }
 
-# zstyle ':vcs_info:git:*' formats ' git:(%b)'
-# PS1='> %~${vcs_info_msg_0_} '
-
 setopt prompt_subst
-# echo " ( .-.)"
-PS1='%~${vcs_info_msg_0_}> '
-zstyle ':vcs_info:git:*' formats ' (%b)'
+PS1='➜ %~${vcs_info_msg_0_} '
+
+
+alias ls='ls -l -a -F'
+alias vim='nvim'
+
+
+export PATH="$HOME/.atuin/bin:$PATH"
+
+
+[[ -d ~/.cache/zsh ]] || mkdir -p ~/.cache/zsh
 
 
 
-alias ls="ls -l -a -F"
-alias vim="nvim"
-
-
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-
+eval "$(atuin init zsh --disable-up-arrow)"
