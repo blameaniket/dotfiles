@@ -16,8 +16,8 @@
 
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
 hl.monitor({
-    output   = "HDMI-A-1",
-    mode     = "1920x1080@60.00",
+    output   = "DP-1",
+    mode     = "1920x1080@240.00",
     position = "auto",
     scale    = "auto",
 })
@@ -28,7 +28,7 @@ hl.monitor({
 ---------------------
 
 -- Set programs that you use
-local terminal    = "st"
+local terminal    = "alacritty"
 local fileManager = "dolphin"
 local menu        = "tofi-run | sh"
 
@@ -42,9 +42,9 @@ local menu        = "tofi-run | sh"
 -- Autostart necessary processes (like notifications daemons, status bars, etc.)
 -- Or execute your favorite apps at launch like this:
 --
-hl.on("hyprland.start", function () 
-  hl.exec_cmd("swaybg -i ~/Downloads/wallpapers/minimal_wallpaper.png -m fill &")
-  hl.exec_cmd("hyprsunset --gamma 50 --temperature 3000 &")
+hl.on("hyprland.start", function ()
+  hl.exec_cmd("swaybg -i ~/Downloads/wallpapers/Everforest/forestpath.jpg -m fill &")
+  hl.exec_cmd("hyprsunset --gamma 50 --temperature 4000 &")
 end)
 
 
@@ -251,23 +251,28 @@ hl.device({
 ---------------------
 ---- KEYBINDINGS ----
 ---------------------
-
-local mainMod = "SUPER" -- Sets "Windows" key as main modifier
-
--- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-hl.bind(mainMod .. " + return", hl.dsp.exec_cmd("alacritty"))
-hl.bind(mainMod .. " + q", hl.dsp.exec_cmd("kitty"))
-local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
+local mainMod = "SUPER" -- Sets "Windows" key as main modifier Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more hl.bind(mainMod .. " + return", hl.dsp.exec_cmd("alacritty")) hl.bind(mainMod .. " + q", hl.dsp.exec_cmd("alacritty")) local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + V", function()
+    hl.dispatch(hl.dsp.window.float({ action = "set" }))
+    hl.dispatch(hl.dsp.window.resize({ x = 1200, y = 700, relative = false }))
+    hl.dispatch(hl.dsp.window.center({}))
+end)
 hl.bind(mainMod .. " + p", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + q", hl.dsp.exec_cmd(terminal))
 
--- Move focus with mainMod + arrow keys
+local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
+
+
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }), { repeating = true })
+hl.bind(mainMod .. " + left", hl.dsp.window.bring_to_top(), { repeating = true })
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }), { repeating = true })
+hl.bind(mainMod .. " + right", hl.dsp.window.bring_to_top(), { repeating = true })
 hl.bind(mainMod .. " + up",    hl.dsp.focus({ direction = "up" }), { repeating = true })
+hl.bind(mainMod .. " + up", hl.dsp.window.bring_to_top(), { repeating = true })
 hl.bind(mainMod .. " + down",  hl.dsp.focus({ direction = "down" }), { repeating = true })
+hl.bind(mainMod .. " + down", hl.dsp.window.bring_to_top(), { repeating = true })
 hl.bind(mainMod .. " + h", hl.dsp.focus({ direction = "left" }), { repeating = true })
 hl.bind(mainMod .. " + h", hl.dsp.window.bring_to_top(), { repeating = true })
 hl.bind(mainMod .. " + j", hl.dsp.focus({ direction = "down" }), { repeating = true })
@@ -287,7 +292,8 @@ hl.bind("ALT + SHIFT + j", hl.dsp.window.swap({ direction = "down" }), { repeati
 hl.bind("ALT + SHIFT + k", hl.dsp.window.swap({ direction = "up" }), { repeating = true })
 hl.bind("ALT + SHIFT + l", hl.dsp.window.swap({ direction = "right" }), { repeating = true })
 
-hl.bind("Print", hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | wl-copy"))
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | wl-copy"))
+
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
@@ -354,6 +360,7 @@ hl.window_rule({
     no_focus = true,
 })
 
+
 -- Layer rules also return a handle.
 -- local overlayLayerRule = hl.layer_rule({
 --     name  = "no-anim-overlay",
@@ -396,3 +403,10 @@ end)
 --         },
 --     },
 -- })
+
+
+hl.config({
+    cursor = {
+        no_hardware_cursors = true
+    }
+})
