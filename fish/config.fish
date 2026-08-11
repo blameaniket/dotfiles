@@ -7,10 +7,10 @@ set PATH $PATH /home/aniketmondal/.local/bin
 
 alias ls="ls --color=never --indicator-style=classify -lah"
 alias catfile="~/dev/dotfiles/scripts/catfile.sh"
-alias openpdf="~/dev/dotfiles/scripts/openpdf.sh"
+alias openpdf="~/dev/dotfiles/scripts/zathura.sh"
 alias fastfetch="fastfetch --logo ~/Downloads/garfield_banging.png --logo-height 17 --logo-padding 2 --logo-padding-top 1"
 alias imageopen="~/dev/dotfiles/scripts/imageopen.sh"
-alias wallpaper="~/dev/dotfiles/scripts/wallpaper.sh"
+alias wallpaper="~/dev/dotfiles/scripts/wallpaper_change.sh"
 
 set -g PROJECTS_DIRS \
     $HOME \
@@ -19,7 +19,8 @@ set -g PROJECTS_DIRS \
     $HOME/.local/share/nvim/lazy \
     $HOME/dev \
     $HOME/dev/projects \
-    $HOME/dev/dotfiles
+    $HOME/dev/dotfiles \
+    $HOME/dev/git
 
 function fzf-cd
     set dir (printf "%s\n" $PROJECTS_DIRS | while read -l base
@@ -40,5 +41,9 @@ bind -M insert \cd fzf-cd
 bind \ec fzf-cd
 bind -M insert \ec fzf-cd
 
-set -U nvm_default_version 26.3.0
+# set -U nvm_default_version 26.3.0
 
+
+
+# Added by Antigravity CLI installer
+set -gx PATH "/home/aniketmondal/.local/bin" $PATH
