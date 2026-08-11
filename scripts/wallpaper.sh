@@ -4,8 +4,15 @@
 selection=`rg --files ~/Downloads/wallpapers | fzf`
 
 if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
-    killall swaybg 
-    swaybg -i $selection -m fill &
+    if pgrep -x hyprpaper >/dev/null; then
+        killall hyprpaper
+    fi
+
+    if pgrep -x swaybg >/dev/null; then
+        killall swaybg
+    fi
+
+    swaybg -i "$selection" -m fill &
 
 elif [ "$XDG_SESSION_TYPE" = "x11" ]; then
     feh --bg-fill $selection &

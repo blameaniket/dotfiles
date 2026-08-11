@@ -22,6 +22,8 @@ hl.monitor({
     scale    = "auto",
 })
 
+hl.env("LIBVA_DRIVER_NAME", "nvidia")
+hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
 
 ---------------------
 ---- MY PROGRAMS ----
@@ -43,8 +45,10 @@ local menu        = "tofi-run | sh"
 -- Or execute your favorite apps at launch like this:
 --
 hl.on("hyprland.start", function ()
-  hl.exec_cmd("swaybg -i ~/Downloads/wallpapers/Everforest/forestpath.jpg -m fill &")
-  hl.exec_cmd("hyprsunset --gamma 50 --temperature 4000 &")
+  -- hl.exec_cmd("swaybg -i ~/Downloads/wallpapers/Gruvbox/gruv-minimal/lady.png -m fill &")
+  hl.exec_cmd("hyprsunset --gamma 50 --temperature 3000 &")
+  hl.exec_cmd("hypridle")
+  hl.exec_cmd("hyprpaper &")
 end)
 
 
@@ -92,8 +96,8 @@ hl.config({
         col = {
             -- active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
             -- inactive_border = "rgba(595959aa)",
-            active_border   = "rgba(333333ff)",
-            inactive_border = "rgba(222222ff)",
+            active_border   = "rgba(444444ff)",
+            inactive_border = "rgba(333333ff)",
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -143,23 +147,23 @@ hl.curve("quick",          { type = "bezier", points = { {0.15, 0},    {0.1, 1} 
 -- Default springs
 hl.curve("easy",           { type = "spring", mass = 1, stiffness = 71.2633, dampening = 15.8273644 })
 
-hl.animation({ leaf = "global",        enabled = false,  speed = 10,   bezier = "default" })
-hl.animation({ leaf = "border",        enabled = false,  speed = 5.39, bezier = "easeOutQuint" })
-hl.animation({ leaf = "windows",       enabled = false,  speed = 4.79, spring = "easy" })
-hl.animation({ leaf = "windowsIn",     enabled = false,  speed = 4.1,  spring = "easy",         style = "popin 87%" })
-hl.animation({ leaf = "windowsOut",    enabled = false,  speed = 1.49, bezier = "linear",       style = "popin 87%" })
-hl.animation({ leaf = "fadeIn",        enabled = false,  speed = 1.73, bezier = "almostLinear" })
-hl.animation({ leaf = "fadeOut",       enabled = false,  speed = 1.46, bezier = "almostLinear" })
-hl.animation({ leaf = "fade",          enabled = false,  speed = 3.03, bezier = "quick" })
-hl.animation({ leaf = "layers",        enabled = false,  speed = 3.81, bezier = "easeOutQuint" })
-hl.animation({ leaf = "layersIn",      enabled = false,  speed = 4,    bezier = "easeOutQuint", style = "fade" })
-hl.animation({ leaf = "layersOut",     enabled = false,  speed = 1.5,  bezier = "linear",       style = "fade" })
-hl.animation({ leaf = "fadeLayersIn",  enabled = false,  speed = 1.79, bezier = "almostLinear" })
-hl.animation({ leaf = "fadeLayersOut", enabled = false,  speed = 1.39, bezier = "almostLinear" })
-hl.animation({ leaf = "workspaces",    enabled = false,  speed = 1.94, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "workspacesIn",  enabled = false,  speed = 1.21, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "workspacesOut", enabled = false,  speed = 1.94, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "zoomFactor",    enabled = false,  speed = 7,    bezier = "quick" })
+hl.animation({ leaf = "global",        enabled = true,  speed = 10,   bezier = "default" })
+hl.animation({ leaf = "border",        enabled = true,  speed = 5.39, bezier = "easeOutQuint" })
+hl.animation({ leaf = "windows",       enabled = true,  speed = 4.79, spring = "easy" })
+hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 4.1,  spring = "easy",         style = "popin 87%" })
+hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 1.49, bezier = "linear",       style = "popin 87%" })
+hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 1.73, bezier = "almostLinear" })
+hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 1.46, bezier = "almostLinear" })
+hl.animation({ leaf = "fade",          enabled = true,  speed = 3.03, bezier = "quick" })
+hl.animation({ leaf = "layers",        enabled = true,  speed = 3.81, bezier = "easeOutQuint" })
+hl.animation({ leaf = "layersIn",      enabled = true,  speed = 4,    bezier = "easeOutQuint", style = "fade" })
+hl.animation({ leaf = "layersOut",     enabled = true,  speed = 1.5,  bezier = "linear",       style = "fade" })
+hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 1.79, bezier = "almostLinear" })
+hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 1.39, bezier = "almostLinear" })
+hl.animation({ leaf = "workspaces",    enabled = true,  speed = 1.94, bezier = "almostLinear", style = "fade" })
+hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 1.21, bezier = "almostLinear", style = "fade" })
+hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 1.94, bezier = "almostLinear", style = "fade" })
+hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 7,    bezier = "quick" })
 
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 -- "Smart gaps" / "No gaps when only"
@@ -256,11 +260,11 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier Example binds, se
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + V", function()
     hl.dispatch(hl.dsp.window.float({ action = "set" }))
-    hl.dispatch(hl.dsp.window.resize({ x = 1200, y = 700, relative = false }))
+    hl.dispatch(hl.dsp.window.resize({ x = 700, y = 500, relative = false }))
     hl.dispatch(hl.dsp.window.center({}))
 end)
 hl.bind(mainMod .. " + p", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + q", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(terminal))
 
 local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 
