@@ -11,6 +11,7 @@ alias openpdf="~/dev/dotfiles/scripts/zathura.sh"
 alias fastfetch="fastfetch --logo ~/Downloads/garfield_banging.png --logo-height 17 --logo-padding 2 --logo-padding-top 1"
 alias imageopen="~/dev/dotfiles/scripts/imageopen.sh"
 alias wallpaper="~/dev/dotfiles/scripts/wallpaper_change.sh"
+alias idleconfig="nvim ~/.config/hypr/hypridle.conf"
 
 set -g PROJECTS_DIRS \
     $HOME \
@@ -20,6 +21,7 @@ set -g PROJECTS_DIRS \
     $HOME/dev \
     $HOME/dev/projects \
     $HOME/dev/dotfiles \
+    $HOME/dev/programming/ \
     $HOME/dev/git
 
 function fzf-cd
