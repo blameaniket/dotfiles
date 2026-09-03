@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "monospace:pixelsize=18:antialias=true:autohint=true";
+static char *font = "monospace:pixelsize=14:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -133,7 +133,7 @@ static const char *colorname[] = {
 	"#cccccc",
 	"#555555",
 	"#e0def4", /* default foreground colour */
-	"#282828", /* default background colour */
+	"#0d1117", /* default background colour */
 };
 
 

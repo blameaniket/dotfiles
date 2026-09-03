@@ -2,6 +2,7 @@
 
 PDF_DIRS=(
   "$HOME/Downloads"
+  "/media/sf_arch_vm_shared_folder/"
 )
 
 selected=$(rg --files "${PDF_DIRS[@]}" -g "*.pdf" -g "*.PDF" 2>/dev/null | fzf)
